@@ -1,0 +1,103 @@
+openapi: 3.0.3
+info:
+  title: User SignUp and Login Open API
+  description: |-
+    This microservice consists of the APIs that are used to signup and login a user
+    in to the system
+  contact:
+    email: apiteam@swagger.io
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: http://127.0.0.1:3001
+tags:
+  - name: User
+    description: Operations about user
+paths:
+  "/users/signup":
+    post:
+      tags:
+        - User
+      summary: Adds a new user in to the system
+      description: using this api the user can register/signup in to the system by providing the valid email and password
+      operationId: userSignUp
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/userSignUpLoginRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/userSignUpResponse"
+  "/users/login":
+    post:
+      tags:
+        - User
+      summary: Login already registered user in to the system
+      description:
+        using this api an already registered customer can send in their
+        registered email and password to login in to the system to use the services
+      operationId: userLogin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/userSignUpLoginRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/userLoginResponse"
+
+components:
+  schemas:
+    userSignUpLoginRequest:
+      description: request body for the adding the user in to the system
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          description: email of the user
+          type: string
+          minLength: 1
+          maxLength: 50
+          example: john.doe@email.com
+        password:
+          description: password of the user
+          type: string
+          minLength: 8
+          maxLength: 20
+          example: M12#%123K
+    userSignUpResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: user signup successful
+    userLoginResponse:
+      type: object
+      properties:
+        accessToken:
+          description: token that can be used for authorization while accessing the protected routes
+          type: string
+          example: sdhfuwefwhbefwuef
+        refreshToken:
+          description: token that can be used to fetch a new accessToken once the existing accessToken expires.
+          type: string
+          example: sdhfuwefwhbefwuef
+        expiresIn:
+          description: in how many seconds the accessToken is valid from the time of issue
+          type: string
+          example: "3600"

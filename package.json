@@ -1,0 +1,30 @@
+{
+	"name": "fastify-openapi-glue-implementation",
+	"version": "1.0.0",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "nodemon ./src/index.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"devDependencies": {
+		"@eslint/js": "^9.15.0",
+		"eslint": "^9.15.0",
+		"eslint-plugin-sonarjs": "^2.0.4",
+		"globals": "^15.12.0",
+		"nodemon": "^3.1.7"
+	},
+	"dependencies": {
+		"@fastify/swagger": "^9.3.0",
+		"@fastify/swagger-ui": "^5.1.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-prettier": "^5.2.1",
+		"fastify": "^5.1.0",
+		"fastify-plugin": "^5.0.1",
+		"prettier": "^3.3.3"
+	}
+}
