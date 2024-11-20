@@ -1,13 +1,25 @@
 import fastify from "fastify";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
+import fastifyOpenapiGlue from "fastify-openapi-glue";
 import { join, dirname } from "path";
 import process from "node:process";
+import handlers from "./swagger/index.js";
 
 const dirName = dirname(import.meta.filename);
 
+const openApiGlueOptions = {
+	specification: join(dirName, "swagger/swagger.yaml"),
+	serviceHandlers: handlers,
+};
 const startServer = async () => {
-	const fastifyInstance = fastify();
+	const fastifyInstance = fastify({
+		ajv: {
+			customOptions: {
+				strict: false,
+			},
+		},
+	});
 	fastifyInstance
 		.register(fastifySwagger, {
 			mode: "static",
@@ -35,7 +47,8 @@ const startServer = async () => {
 				return swaggerObject;
 			},
 			transformSpecificationClone: true,
-		});
+		})
+		.register(fastifyOpenapiGlue, openApiGlueOptions);
 	return fastifyInstance;
 };
 
